@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+defaults:
+  run:
+    working-directory: current-project
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +16,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - run: cd current-project
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build .
       - run: cmake --build . --target test
