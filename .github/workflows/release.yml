@@ -20,6 +20,9 @@ jobs:
       - run: cmake --build .
       - run: cmake --build . --target test
       - run: cmake --build . --target package
+      - name: Get package filename
+        id: get_pkg_filename
+        run: echo "filename=$(ls . | grep '\.deb$')" >> $GITHUB_OUTPUT
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -37,6 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./current-project/helloworld-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./current-project/${{ steps.get_pkg_filename.outputs.filename }}
+          asset_name: ${{ steps.get_pkg_filename.outputs.filename }}
           asset_content_type: application/vnd.debian.binary-package
