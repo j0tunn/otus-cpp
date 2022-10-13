@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <cstdint>
+#include <string>
 
 using IPAddress = std::vector<uint8_t>;
 
