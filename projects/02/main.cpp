@@ -1,7 +1,9 @@
 #include "utils.h"
 
+#include <vector>
 #include <iostream>
 #include <algorithm>
+#include <exception>
 
 using namespace std;
 
@@ -15,14 +17,16 @@ int main(int, char **) {
 			break;
 		}
 
-		addresses.push_back(parseIPAddress(line));
+		try {
+			addresses.push_back(parseIPAddress(line));
+		} catch(exception& e) {
+			cerr << e.what() << ": " << line << endl;
+			return -1;
+		}
 	}
 
 	sort(addresses.begin(), addresses.end(), [](const IPAddress& a, const IPAddress& b) {
-		return a[0] > b[0]
-			|| a[0] == b[0] && a[1] > b[1]
-			|| a[0] == b[0] && a[1] == b[1] && a[2] > b[2]
-			|| a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] > b[3];
+		return toUInt32(a) > toUInt32(b);
 	});
 
 	for (auto addr: addresses)

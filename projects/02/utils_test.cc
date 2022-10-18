@@ -3,14 +3,14 @@
 #include <gtest/gtest.h>
 
 TEST(parseIPAddress, ValidAddress) {
-  EXPECT_EQ(parseIPAddress("0.0.0.0"), std::vector<uint8_t>({0, 0, 0, 0}));
-  EXPECT_EQ(parseIPAddress("127.0.0.1"), std::vector<uint8_t>({127, 0, 0, 1}));
-  EXPECT_EQ(parseIPAddress("255.255.255.255"), std::vector<uint8_t>({255, 255, 255, 255}));
+  EXPECT_EQ(parseIPAddress("0.0.0.0"), IPAddress({0, 0, 0, 0}));
+  EXPECT_EQ(parseIPAddress("127.0.0.1"), IPAddress({127, 0, 0, 1}));
+  EXPECT_EQ(parseIPAddress("255.255.255.255"), IPAddress({255, 255, 255, 255}));
 
-  EXPECT_EQ(parseIPAddress("127.0.0.1 "), std::vector<uint8_t>({127, 0, 0, 1}));
-  EXPECT_EQ(parseIPAddress("127.0.0.1\t"), std::vector<uint8_t>({127, 0, 0, 1}));
-  EXPECT_EQ(parseIPAddress("127.0.0.1 foo bar"), std::vector<uint8_t>({127, 0, 0, 1}));
-  EXPECT_EQ(parseIPAddress("127.0.0.1\tfoo\tbar"), std::vector<uint8_t>({127, 0, 0, 1}));
+  EXPECT_EQ(parseIPAddress("127.0.0.1 "), IPAddress({127, 0, 0, 1}));
+  EXPECT_EQ(parseIPAddress("127.0.0.1\t"), IPAddress({127, 0, 0, 1}));
+  EXPECT_EQ(parseIPAddress("127.0.0.1 foo bar"), IPAddress({127, 0, 0, 1}));
+  EXPECT_EQ(parseIPAddress("127.0.0.1\tfoo\tbar"), IPAddress({127, 0, 0, 1}));
 }
 
 TEST(parseIPAddress, InvalidAddress) {
@@ -34,4 +34,10 @@ TEST(parseIPAddress, InvalidAddress) {
 
 TEST(toString, ValidAddress) {
   EXPECT_EQ(toString({127, 0, 0, 1}), "127.0.0.1");
+}
+
+TEST(toUint32, Simple) {
+  EXPECT_EQ(toUInt32({0, 0, 0, 0}), 0);
+  EXPECT_EQ(toUInt32({127, 0, 0, 1}), 0x7F000001);
+  EXPECT_EQ(toUInt32({255, 255, 255, 255}), 0xFFFFFFFF);
 }
