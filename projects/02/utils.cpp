@@ -2,7 +2,7 @@
 #include <regex>
 #include <stdexcept>
 #include <algorithm>
-#include  <sstream>
+#include <sstream>
 
 using namespace std;
 
@@ -11,20 +11,24 @@ IPAddress parseIPAddress(const string& str) {
     smatch match;
 
     if (!regex_match(str, match, re)) {
-        throw logic_error("Not an IP address string: " + str);
+        throw logic_error("Not an IP address string");
     }
 
-    IPAddress result;
-    transform(++match.begin(), match.end(), back_inserter(result), [&str](const string& piece) {
+    const auto getByte = [](const string& piece) -> uint8_t {
         const auto byte = stoul(piece);
         if (byte > 255) {
-            throw logic_error("Not an IP address string: " + str);
+            throw logic_error("Not an IP address string");
         }
 
         return byte;
-    });
+    };
 
-    return result;
+    return {
+        getByte(match[1]),
+        getByte(match[2]),
+        getByte(match[3]),
+        getByte(match[4])
+    };
 };
 
 string toString(const IPAddress& ip) {
@@ -33,4 +37,8 @@ string toString(const IPAddress& ip) {
     s << to_string(ip[0]) << "." << to_string(ip[1]) << "." << to_string(ip[2]) << "." << to_string(ip[3]);
 
     return s.str();
+}
+
+uint32_t toUInt32(const IPAddress& ip) {
+    return (ip[0] << 24) | (ip[1] << 16) | (ip[2] << 8) | ip[3];
 }
