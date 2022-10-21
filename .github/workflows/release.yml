@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    working-directory: current-project
+    working-directory: projects/current
 
 jobs:
   build:
@@ -40,6 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./current-project/${{ steps.get_pkg_filename.outputs.filename }}
+          asset_path: ./projects/current/${{ steps.get_pkg_filename.outputs.filename }}
           asset_name: ${{ steps.get_pkg_filename.outputs.filename }}
           asset_content_type: application/vnd.debian.binary-package
