@@ -2,7 +2,7 @@
 
 ### Структура репозитория
 - projects/<NN> - директории с проектами ДЗ
-- current-project - symlink на текущий проект
+- projects/current - symlink на текущий проект
 - tools - вспомогательные инструменты
 
 ### Проверка под Linux
