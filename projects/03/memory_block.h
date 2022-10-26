@@ -13,6 +13,9 @@ public:
         , freeChunks_{{size, 0}}
     {}
 
+    MemoryBlock(MemoryBlock&&) = default;
+    MemoryBlock& operator=(MemoryBlock&&) = default;
+
     T* Reserve(size_t size) {
         auto it = freeChunks_.lower_bound(size);
         if (it == std::end(freeChunks_)) {
