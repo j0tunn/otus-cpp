@@ -11,10 +11,9 @@ add_library(helloworld_lib lib.cpp)
 target_link_libraries(helloworld_cli PRIVATE helloworld_lib)
 
 # Tests
-enable_testing()
-add_executable(lib_test lib_test.cc)
-target_link_libraries(lib_test helloworld_lib GTest::gtest_main)
-setupGTest(lib_test)
+add_executable(test lib_test.cc)
+target_link_libraries(test helloworld_lib GTest::gtest_main)
+setupGTest(test)
 
 # Package
 setupCPack(helloworld_cli)
