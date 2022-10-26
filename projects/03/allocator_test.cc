@@ -112,3 +112,10 @@ TEST_F(BulkAllocatorTest, OnRemoveAllElements_ShouldDeallocateWholeMemoryOnce) {
 
     Mock::VerifyAndClearExpectations(&MemoryMgrMock::getInstance());
 }
+
+TEST_F(BulkAllocatorTest, CopyConstructor_ShuldInitiateContainerCopyWithClearAllocator) {
+    EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate).Times(Exactly(2));
+
+    Map<2> m{{1, 1}, {2, 2}};
+    auto m2 = m;
+}

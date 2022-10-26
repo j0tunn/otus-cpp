@@ -23,7 +23,9 @@ public:
     ~BulkAllocator() = default;
 
     template <typename U>
-    BulkAllocator(const BulkAllocator<U, N>&) {}
+    BulkAllocator(const BulkAllocator<U, N>&) : memoryBlocks_() {}
+
+    BulkAllocator(const BulkAllocator<T, N>&) : memoryBlocks_() {}
 
     T* allocate(std::size_t n) {
         T* p = nullptr;
