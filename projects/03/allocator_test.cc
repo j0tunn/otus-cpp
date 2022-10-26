@@ -27,31 +27,31 @@ protected:
 TEST_F(BulkAllocatorTest, OnCreateEmptyContainer_ShouldNotAllocate) {
     EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate).Times(Exactly(0));
 
-    auto m = Map<1>{};
+    Map<1> m{};
 }
 
 TEST_F(BulkAllocatorTest, OnCreateEmptyContainer_ShouldNotDeallocate) {
     EXPECT_CALL(MemoryMgrMock::getInstance(), Deallocate).Times(Exactly(0));
 
-    auto m = Map<1>{};
+    Map<1> m{};
 }
 
 TEST_F(BulkAllocatorTest, OnCreateContainerWithElements_ShouldAllocateWholeMemoryOnce) {
     EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate(3 * sizeof(Map<3>::node_type))).Times(Exactly(1));
 
-    auto m = Map<3>{{1, 1}, {2, 2}, {3, 3}};
+    Map<3> m{{1, 1}, {2, 2}, {3, 3}};
 }
 
 TEST_F(BulkAllocatorTest, OnCreateContainerWithTooMuchElements_ShouldAllocateNextBulk) {
     EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate(2 * sizeof(Map<3>::node_type))).Times(Exactly(2));
 
-    auto m = Map<2>{{1, 1}, {2, 2}, {3, 3}};
+    Map<2> m{{1, 1}, {2, 2}, {3, 3}};
 }
 
 TEST_F(BulkAllocatorTest, OnDestructContainerWithElements_ShouldDeallocateWholeMemoryOnce) {
     EXPECT_CALL(MemoryMgrMock::getInstance(), Deallocate).Times(Exactly(1));
 
-    auto m = Map<3>{{1, 1}, {2, 2}, {3, 3}};
+    Map<3> m{{1, 1}, {2, 2}, {3, 3}};
 }
 
 TEST_F(BulkAllocatorTest, OnDestructContainerWithElements_ShouldDeallocateSameMemoryThatWasAllocated) {
@@ -63,11 +63,11 @@ TEST_F(BulkAllocatorTest, OnDestructContainerWithElements_ShouldDeallocateSameMe
         return p;
     });
 
-    auto m = Map<3>{{1, 1}, {2, 2}, {3, 3}};
+    Map<3> m{{1, 1}, {2, 2}, {3, 3}};
 }
 
 TEST_F(BulkAllocatorTest, OnAddElements_ShouldAllocateWholeMemoryOnce) {
-    auto m = Map<3>{};
+    Map<3> m{};
 
     EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate(3 * sizeof(Map<3>::node_type))).Times(Exactly(1));
 
@@ -77,7 +77,7 @@ TEST_F(BulkAllocatorTest, OnAddElements_ShouldAllocateWholeMemoryOnce) {
 }
 
 TEST_F(BulkAllocatorTest, OnAddElements_ShouldUseFreedMemoryAtTheEnd) {
-    auto m = Map<3>{};
+    Map<3> m{};
 
     EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate).Times(Exactly(1));
 
@@ -90,7 +90,7 @@ TEST_F(BulkAllocatorTest, OnAddElements_ShouldUseFreedMemoryAtTheEnd) {
 }
 
 TEST_F(BulkAllocatorTest, OnAddElements_ShouldUseFreedMemoryInTheMiddle) {
-    auto m = Map<3>{};
+    Map<3> m{};
 
     EXPECT_CALL(MemoryMgrMock::getInstance(), Allocate).Times(Exactly(1));
 
@@ -103,7 +103,7 @@ TEST_F(BulkAllocatorTest, OnAddElements_ShouldUseFreedMemoryInTheMiddle) {
 }
 
 TEST_F(BulkAllocatorTest, OnRemoveAllElements_ShouldDeallocateWholeMemoryOnce) {
-    auto m = Map<2>{{1, 1}, {2, 2}};
+    Map<2> m{{1, 1}, {2, 2}};
 
     EXPECT_CALL(MemoryMgrMock::getInstance(), Deallocate).Times(Exactly(1));
 
