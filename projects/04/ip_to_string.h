@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <numeric>
+#include <limits>
 #include <type_traits>
 #include <tuple>
 
