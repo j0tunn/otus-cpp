@@ -15,7 +15,7 @@ jobs:
           submodules: true
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build .
-      - run: cmake --build . --target test && ./test
+      - run: '! test -f ./test || ./test'
       - run: cmake --build . --target package
       - name: Get package filename
         id: get_pkg_filename

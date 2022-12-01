@@ -1,0 +1,92 @@
+@startuml
+
+class Controller {
+    -pModel_: Model::Document
+    -pView_: View::Document
+    +NewDocument()
+    +AddSquare(number)
+    +AddCircle(number)
+    +DeleteLastObject()
+    +ExportDocument(string)
+    +ImportDocument(string)
+}
+
+Controller o-- Model.Document
+Controller o-- View.Document
+
+namespace Model {
+    interface IObject {
+        +Serialize(): string
+    }
+    class Square {
+        -side_: number
+        +Square(number)
+        +Serialize()
+        +GetSide(): number
+    }
+    class Circle {
+        -radius_: number
+        +Circle(number)
+        +Serialize()
+        +GetRadius(): number
+    }
+    class Document {
+        -objects_: List<IObject>
+        +{static} Deserialize(string): Document
+        +AddObject<T, Args...>(Args...)
+        +RmLastObject()
+        +Serialize(): string
+    }
+    interface IObserver {
+        +OnNewObject(Square)
+        +OnNewObject(Circle)
+        +OnRmLastObject()
+    }
+    class Observable {
+        -observers_: List<IObserver>
+        +AddObserver(IObserver)
+        +NotifyNewObject<T>(T)
+        +NotifyRmLastObject()
+    }
+
+    IObject <|-- Square
+    IObject <|-- Circle
+    Observable <|-- Document
+    IObserver <.. Observable
+    Document o-- IObject
+
+    Square <.. .View.Square
+    Circle <.. .View.Circle
+    IObserver <|-- .View.Document
+}
+
+namespace View {
+    interface IDrawable {
+        +Draw()
+    }
+    class Square {
+        -model_: Model::Square
+        +Square(Model::Square)
+        +Draw()
+    }
+    class Circle {
+        -model_: Model::Circle
+        +Circle(Model::Circle)
+        +Draw()
+    }
+    class Document {
+        -subViews_: List<IDrawable>
+        +Document(Model::Document)
+        +OnRmLastObject()
+        +OnNewObject(Model::Square)
+        +OnNewObject(Model::Circle)
+        -AddSubView_<T, Model::U>(Model::U)
+        -Draw()
+    }
+
+    IDrawable <|-- Square
+    IDrawable <|-- Circle
+    Document o-- IDrawable
+}
+
+@enduml
