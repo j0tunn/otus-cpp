@@ -42,7 +42,7 @@ void AutoModeState::finishBulk() {
 }
 
 void AutoModeState::eof() {
-    setNewState<ManualModeState>();
+    setNewState<AutoModeState>();
 }
 
 /// ManualModeState

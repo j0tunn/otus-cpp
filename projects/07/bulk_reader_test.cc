@@ -27,8 +27,8 @@ TEST(BulkReader_eof, shouldNotifyAllFlushObserversWithSameBulk) {
     const vector<Command>* p1 = nullptr;
     const vector<Command>* p2 = nullptr;
 
-    ON_CALL(fooObserver, onFlush(_)).WillByDefault(Invoke([&p1](const vector<Command>& bulk) { p1 = &bulk; }));
-    ON_CALL(barObserver, onFlush(_)).WillByDefault(Invoke([&p2](const vector<Command>& bulk) { p2 = &bulk; }));
+    EXPECT_CALL(fooObserver, onFlush(_)).WillOnce(Invoke([&p1](const vector<Command>& bulk) { p1 = &bulk; }));
+    EXPECT_CALL(barObserver, onFlush(_)).WillOnce(Invoke([&p2](const vector<Command>& bulk) { p2 = &bulk; }));
 
     bulkReader.eof();
 
@@ -43,7 +43,7 @@ TEST(BulkReader_eof, shouldDropBulkAfterEachFlush) {
 
     vector<unsigned int> bulksSize;
 
-    ON_CALL(fooObserver, onFlush(_)).WillByDefault(Invoke([&bulksSize](const vector<Command>& bulk) { bulksSize.push_back(bulk.size()); }));
+    EXPECT_CALL(fooObserver, onFlush(_)).WillRepeatedly(Invoke([&bulksSize](const vector<Command>& bulk) { bulksSize.push_back(bulk.size()); }));
 
     bulkReader.addCmd("foo");
     bulkReader.eof();
