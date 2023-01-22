@@ -101,8 +101,8 @@ TEST(Scanner_scan, ShouldOpenFilteredFiles) {
 
     Scanner(pFSAdapter.get())
         .scan(Opts{
-            .hashType = HashType::crc32,
-            .chunkSize = 100500
+            .chunkSize = 100500,
+            .hashType = HashType::crc32
         });
 }
 
