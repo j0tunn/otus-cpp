@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 project(join_server VERSION ${PROJECT_VERSION})
 
+set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED system regex)
 
 include(FetchContent)
