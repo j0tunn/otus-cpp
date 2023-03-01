@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
         const unsigned int mappersCount = atoi(argv[2]);
         const unsigned int reducesCount = atoi(argv[3]);
 
-        filesystem::path inputFile("input.txt");
+        filesystem::path inputFile(src);
 
         for (unsigned int prefixLen = 1;; ++prefixLen) {
             const vector<string> res = MapReduce<pair<bool, string>>(mappersCount, reducesCount)
