@@ -1,0 +1,16 @@
+#!/bin/bash
+
+mkdir deps
+cd deps
+
+git clone --depth 1 --branch v1.1.1 https://github.com/catboost/catboost.git
+cd catboost
+
+# fix static build
+# https://github.com/catboost/catboost/issues/2187
+git apply ../../catboost-fix.diff
+
+./ya make -r catboost/libs/model_interface/static
+
+cd ../../
+ln -s deps/catboost/catboost/libs/model_interface catboost
