@@ -10,7 +10,9 @@ cd catboost
 # https://github.com/catboost/catboost/issues/2187
 git apply ../../catboost-fix.diff
 
-./ya make -r catboost/libs/model_interface/static
+# Looks like by default c-object build with -fPIC and cxx-objects with -fPIE
+# build with the same flags
+./ya make -DCXXFLAGS=-fPIE -DCFLAGS=-fPIE -r catboost/libs/model_interface/static
 
 cd ../../
 ln -s deps/catboost/catboost/libs/model_interface catboost
