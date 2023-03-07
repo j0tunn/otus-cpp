@@ -21,13 +21,14 @@ target_link_libraries(${PROJECT_NAME} utils_lib)
 # Tests
 add_executable(test
     model_test.cc
+    fixtures
 )
 target_link_libraries(test PUBLIC utils_lib)
 
-add_custom_target(test_fixtures
+add_custom_command(
+    OUTPUT fixtures
     COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/fixtures ${CMAKE_CURRENT_BINARY_DIR}/fixtures
 )
-add_dependencies(test test_fixtures)
 
 setupGTest(test)
 
