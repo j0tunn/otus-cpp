@@ -22,14 +22,16 @@ function(setupGTest target)
   gtest_discover_tests(${target})
 endfunction()
 
-
-function(setupCPack target)
-  install(TARGETS ${target} RUNTIME DESTINATION bin)
-
+function(setupDebPkg)
   set(CPACK_GENERATOR DEB)
   set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
   set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
   set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
   set(CPACK_PACKAGE_CONTACT j0tunn@ya.ru)
   include(CPack) # generates target `package`
+endfunction()
+
+function(setupCPack target)
+  install(TARGETS ${target} RUNTIME DESTINATION bin)
+  setupDebPkg()
 endfunction()
