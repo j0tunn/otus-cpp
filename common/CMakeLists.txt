@@ -16,7 +16,7 @@ function(setupGTest target)
   FetchContent_MakeAvailable(googletest)
 
   include_directories(${googletest_SOURCE_DIR}/googlemock/include)
-  target_link_libraries(${target} GTest::gtest_main GTest::gmock_main)
+  target_link_libraries(${target} PUBLIC GTest::gtest_main GTest::gmock_main)
 
   include(GoogleTest)
   gtest_discover_tests(${target})

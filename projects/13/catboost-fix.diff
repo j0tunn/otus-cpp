@@ -1,0 +1,43 @@
+diff --git a/catboost/libs/model/ya.make b/catboost/libs/model/ya.make
+index 7f97b04542..f5a627da48 100644
+--- a/catboost/libs/model/ya.make
++++ b/catboost/libs/model/ya.make
+@@ -3,8 +3,8 @@ LIBRARY()
+ 
+ 
+ SRCS(
+-    GLOBAL cpu/formula_evaluator.cpp
+-    GLOBAL model_import_interface.cpp
++    cpu/formula_evaluator.cpp
++    model_import_interface.cpp
+     cpu/evaluator_impl.cpp
+     cpu/quantization.cpp
+     ctr_data.cpp
+diff --git a/library/cpp/logger/ya.make b/library/cpp/logger/ya.make
+index 14dfaf820a..956532ef13 100644
+--- a/library/cpp/logger/ya.make
++++ b/library/cpp/logger/ya.make
+@@ -17,12 +17,12 @@ SRCS(
+     GLOBAL composite_creator.cpp
+     element.cpp
+     file.cpp
+-    GLOBAL file_creator.cpp
++    file_creator.cpp
+     filter.cpp
+     filter_creator.cpp
+     log.cpp
+     null.cpp
+-    GLOBAL null_creator.cpp
++    null_creator.cpp
+     priority.h
+     record.h
+     rotating_file.cpp
+@@ -35,7 +35,7 @@ SRCS(
+     GLOBAL system_creator.cpp
+     thread.cpp
+     thread_creator.cpp
+-    GLOBAL uninitialized_creator.cpp
++    uninitialized_creator.cpp
+     reopen.h
+ )
+ 
